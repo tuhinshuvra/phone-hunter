@@ -1,20 +1,31 @@
 
 
 
-const getPhones = async () => {
-    const url = 'https://openapi.programming-hero.com/api/phones?search=iphone';
+const getPhones = async (searchText) => {
+    const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
     const response = await fetch(url);
     const phones = await response.json();
     // console.log(phones.data)
     displayPhones(phones.data);
 
 }
-const displayPhones = (phones) => {
+const displayPhones = phones => {
     // console.log(phones);
+
+    const phoneContainer = document.getElementById('phone-container');
+    phoneContainer.textContent = '';
+    phones = phones.slice(0, 10);
+
+    const noPhone = document.getElementById('not-found-message');
+    if (phones.length == 0) {
+        noPhone.classList.remove('d-none');
+    } else {
+        noPhone.classList.add('d-none');
+    }
 
     phones.forEach(phone => {
         const { brand, phone_name, slug, image } = phone;
-        const phoneContainer = document.getElementById('phone-container');
+
 
         const phoneDiv = document.createElement('div');
         phoneDiv.classList.add('col');
@@ -30,6 +41,14 @@ const displayPhones = (phones) => {
         phoneContainer.appendChild(phoneDiv);
     })
 }
-// 0: {brand: 'Apple ', phone_name: 'iPhone 13 mini', slug: 'apple_iphone_13_mini-11104', image: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-13-mini.jpg'}
 
-getPhones()
+// phone search section start
+document.getElementById('btn-search').addEventListener('click', function () {
+    const searchField = document.getElementById('search-field');
+    searchText = searchField.value;
+    getPhones(searchText);
+    searchField.value = '';
+})
+// phone search section end
+
+// getPhones();

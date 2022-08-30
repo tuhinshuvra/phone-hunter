@@ -20,23 +20,20 @@
         <!-- phone display search result start -->
         <section>
             <div class="mb-4 w-50 d-flex m-auto">
-                <input type="email" class="form-control me-1" id="exampleFormControlInput1"
-                    placeholder="name@example.com">
-                <button class="btn btn-secondary">Search</button>
+                <input id="search-field" type="email" class="form-control me-1" placeholder="Enter phone name">
+                <button id="btn-search" class="btn btn-secondary">Search</button>
             </div>
+
         </section>
         <!-- phone display search result end -->
 
         <section>
             <div id="phone-container" class="row row-cols-1 row-cols-md-5 g-4">
-                <!-- <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a longer card with supporting text below as a natural
-                                lead-in to additional content. This content is a little bit longer.</p>
-                        </div>
-                    </div> -->
+
+            </div>
+
+            <div id="not-found-message" class="d-none">
+                <h3 class="text-warning">No phone found! Please try again with another name.</h3>
             </div>
 
         </section>
