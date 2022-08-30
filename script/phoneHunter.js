@@ -44,6 +44,8 @@ const displayPhones = (phones, dataLimit) => {
                        <h6 class="card-title">Brand-${brand}, Phone-${phone_name}</h6>
                        <p class="card-text">ID-${slug}</p>
                    </div>
+                   <button onclick="showPhoneDetails('${slug}')" href="#" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#phoneHunterModal">Show Details</button>
+
             </div>    
         `;
         phoneContainer.appendChild(phoneDiv);
@@ -66,6 +68,14 @@ document.getElementById('btn-search').addEventListener('click', function () {
 })
 // phone search section end
 
+
+
+document.getElementById('search-field').addEventListener('keypress', function (event) {
+    if (event.key === 'Enter') {
+        searchProcess(10);
+    }
+});
+
 const toggleSpinner = isLoading => {
     const loader = document.getElementById('loader');
     if (isLoading) {
@@ -79,4 +89,34 @@ document.getElementById('btn-show-all').addEventListener('click', function () {
     searchProcess();
 })
 
-// getPhones();
+const showPhoneDetails = async phoneId => {
+    const url = `https://openapi.programming-hero.com/api/phone/${phoneId}`;
+    const resposne = await fetch(url);
+    const phone = await resposne.json();
+    displayPhoneDetails(phone.data);
+}
+
+const displayPhoneDetails = (phone) => {
+    console.log(phone)
+    const { brand, image, mainFeatures, name, releaseDate, slug } = phone;
+    const { storage, displaySize, chipSet, memory, sensors } = mainFeatures;
+    // const { WLAN, Bluetooth, GPS, NFC, Radio } = others;
+
+    const phoneHunterModalTitle = document.getElementById('phoneHunterModalTitle');
+    const phoneId = document.getElementById('phoneId');
+    const phoneName = document.getElementById('phoneName');
+    const phoneReleaseDate = document.getElementById('phoneReleaseDate');
+    phoneName.innerText = `${brand ? brand : 'No brand name found'}`;
+    phoneHunterModalTitle.innerText = name;
+    phoneId.innerText = `${slug ? slug : 'No Phone Id Found'}`;
+    phoneReleaseDate.innerText = `${releaseDate ? releaseDate : 'No Realese Date Found.'}`;
+    // console.log(releaseDate);
+}
+getPhones('apple');
+// brand: "Samsung"
+// image: "https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-tab-s8-plus.jpg"
+// mainFeatures: { storage: '128GB/256GB storage, microSDXC', displaySize: '12.4 inches, 446.1 cm2 (~84.6% screen-to-body ratio)', chipSet: 'Qualcomm SM8450 Snapdragon 8 Gen 1 (4 nm)', memory: '128GB 8GB RAM, 256GB 8GB RAM, 256GB 12GB RAM', sensors: Array(6) }
+// name: "Galaxy Tab S8+"
+// others: { WLAN: 'Wi-Fi 802.11 a/b/g/n/ac/6e, dual-band, Wi-Fi Direct, hotspot', Bluetooth: '5.2, A2DP, LE', GPS: 'Yes, with A-GPS, GLONASS, BDS, GALILEO', NFC: 'No', Radio: 'No', … }
+// releaseDate: "Exp. release 2022, February"
+// slug: "samsung_galaxy_tab_s8+-11342"
