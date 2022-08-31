@@ -27,11 +27,33 @@
         <section>
 
         </section>
+
         <section class=" container">
             <div id="phones-container" class="row row-cols-1 row-cols-md-5 g-4">
 
             </div>
+
+            <!-- no phon found start -->
+            <div id="not-found-message" class="text-center fw-bolder text-info d-none">
+                <h1 class=" my-5">No Phone to Display, Please try again.</h1>
+            </div>
+            <!-- no phon found end -->
+
+            <div id="show-all" class=" text-center mt-2 d-none">
+                <button id="show-all-btn" class=" btn btn-primary">Show All</button>
+            </div>
         </section>
+
+
+        <!-- spinner secton start -->
+        <section id="loader" class="d-none">
+            <div style="height: 400px;" class="d-flex justify-content-center align-items-center">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </section>
+        <!-- spinner secton end -->
     </main>
 
 
